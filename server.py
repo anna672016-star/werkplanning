@@ -285,6 +285,6 @@ class RoosterServer(ThreadingHTTPServer):
 
 if __name__ == '__main__':
     initialize()
-    server = RoosterServer(('127.0.0.1',PORT), Handler)
+    server = RoosterServer(('0.0.0.0',PORT), Handler)
     print(f'Werkrooster gestart: http://127.0.0.1:{PORT}', flush=True)
     server.serve_forever()
