@@ -40,8 +40,7 @@ def initialize(db):
     );
     ''')
 row = db.execute("SELECT name FROM accounts WHERE name=?", ("Beheerder",)).fetchone()
-    if not row:
-        db.execute("INSERT INTO accounts (name, role, password) VALUES (?, ?, ?)",
+if not row: db.execute("INSERT INTO accounts (name, role, password) VALUES (?, ?, ?)",
                    ("Beheerder", "owner", password_hash("NieuwWachtwoord123!")))
 
 def current(db, headers):
