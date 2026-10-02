@@ -7,7 +7,7 @@ from urllib.parse import urlsplit, parse_qs
 
 ROOT = Path(__file__).resolve().parent
 DB = Path(os.environ.get('ROOSTER_DB', str(ROOT / 'rooster.sqlite3')))
-PORT = int(os.environ.get('ROOSTER_PORT', '8765'))
+PORT = int(os.environ.get('PORT', '8765'))
 EMPLOYEES = ['Mirek', 'Chris', 'Adam', 'Lee', 'Rene', 'Micheal']
 
 class ClosingConnection(sqlite3.Connection):
