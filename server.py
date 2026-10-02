@@ -85,7 +85,7 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def allowed(self):
-        hosts = {f'127.0.0.1:{PORT}', f'localhost:{PORT}'}
+        hosts = {f'127.0.0.1:{PORT}', f'localhost:{PORT}', 'werkplanning-app.onrender.com'}
         if self.headers.get('Host') not in hosts:
             self.send(403, {'error':'Geen toegang.'}); return False
         origin = self.headers.get('Origin')
