@@ -1,0 +1,40 @@
+WERKROOSTER-APP
+
+Open via Werkrooster op het bureaublad.
+Na de update: herstart de computer als de oude versie nog draait.
+Sluiten van alleen de browser is niet genoeg om de oude server te stoppen.
+
+Kies zelf een wachtwoord van minimaal 12 tekens voor het account Beheerder.
+Je bestaande werkzaamheden blijven bewaard.
+
+RECHTEN
+Beheerder: rooster invullen, wijzigen, verwijderen en medewerkers uitnodigen.
+Lee: rooster invullen, wijzigen en verwijderen.
+Mirek, Chris, Adam, Rene en Micheal: het hele rooster bekijken.
+De server controleert deze rechten bij ieder verzoek.
+
+Open Medewerkers om een persoonlijke uitnodiging te maken.
+De ontvanger kiest zelf een wachtwoord. Een uitnodiging is eenmalig bruikbaar
+en 48 uur geldig. Deel iedere uitnodiging alleen met de bedoelde persoon.
+Toegang intrekken verwijdert het account en de actieve sessies.
+Daarna kun je opnieuw uitnodigen, bijvoorbeeld bij een vergeten wachtwoord.
+Werkzaamheden blijven daarbij bewaard. Er is nog geen wachtwoordherstel per
+e-mail; bewaar je eigen beheerderswachtwoord in een wachtwoordmanager.
+
+Op computer en telefoon staan de werknemers onder elkaar en de zeven dagen
+naast elkaar. Op een klein scherm kun je horizontaal door het rooster vegen.
+Het rooster ververst iedere 30 seconden als er geen formulier geopend is.
+
+In een geschikte browser verschijnt App installeren. Op iPhone gebruik je
+Safari > Delen > Zet op beginscherm zodra de app online beschikbaar is.
+Privéroosters worden niet offline opgeslagen; wijzigingen vereisen verbinding.
+
+NOG NIET ONLINE
+De lokale link en uitnodigingen werken alleen op deze computer.
+Online publicatie vereist geschikte hosting, HTTPS, een productieserver,
+blijvende opslag en backups. De lokale server is niet bedoeld voor internet.
+Na online publicatie kan iedereen dezelfde planning op zijn eigen apparaat zien.
+
+Rooster en accounts staan in rooster.sqlite3. Wachtwoorden worden gehasht,
+net als sessietokens en uitnodigingen. Maak privébackups van deze database.
+Upload dit bestand nooit naar een openbaar toegankelijke website-map.

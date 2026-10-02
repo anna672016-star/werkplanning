@@ -1,90 +1,64 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Werkplanning</title>
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kiryan B.V. | Werkrooster</title><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#183c50"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23183c50'/%3E%3Cpath d='M8 9h16v16H8z' fill='white'/%3E%3Cpath d='M8 14h16M12 6v6M20 6v6' stroke='%232cab89' stroke-width='3'/%3E%3C/svg%3E">
+<style>[hidden]{display:none!important}
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#193548;background:#f2f5f7;font-size:16px;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.5}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #148969;outline-offset:3px}header{background:#183c50;color:white;padding:22px 4%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;gap:14px;align-items:center;font-weight:700;font-size:1.2rem}.mark{background:#a3edcf;color:#163b4e;border-radius:10px;padding:9px 12px;font-size:1.25rem}header small{color:#d1dfe7;font-size:.875rem}main{padding:38px 4% 50px;max-width:1800px;margin:auto}.eyebrow{font-size:.875rem;color:#516876;margin:0 0 9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}h1{font-size:2.1rem;letter-spacing:-.04em;margin:0}.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.button{border:1px solid #ccd7df;border-radius:8px;background:white;padding:11px 16px;color:#193548;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px}.primary{background:#166c55;color:#fff;border-color:#166c55}.primary:hover{background:#105540}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}.nav{display:flex;align-items:center;gap:8px}.nav .arrow{font-size:1.25rem;min-width:44px;padding:5px 12px}.range{font-size:1.15rem;font-weight:650;margin-right:12px}.datejump{display:flex;align-items:center;gap:10px;font-size:.875rem}input,select,textarea{padding:10px 11px;border:1px solid #c7d3dc;border-radius:7px;background:white;color:#193548;max-width:100%;min-height:44px}#status{font-size:.875rem;color:#526b79;min-height:23px;margin-bottom:13px}.board{background:white;border:1px solid #d4dee5;border-radius:12px;overflow:auto;box-shadow:0 5px 20px #173f5005}table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;min-width:1020px}th,td{border-right:1px solid #e4eaee;border-bottom:1px solid #e4eaee;text-align:left;vertical-align:top}th:last-child,td:last-child{border-right:0}tbody tr:last-child>*{border-bottom:0}thead th{padding:17px 12px;background:#f8fafb;font-weight:500;color:#536b7a;font-size:.875rem}thead th strong{display:block;color:#193548;font-size:1.2rem;margin-top:5px}thead th:first-child{width:155px;vertical-align:middle;font-weight:600}tbody th{padding:24px 14px;background:white;font-size:1rem;vertical-align:middle}tbody th small{display:block;font-weight:400;color:#607380;font-size:.875rem;margin-top:6px}.avatar{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;font-size:.875rem;background:#e5eef4;margin-right:7px}.cell{padding:9px;height:118px}.today{background:#eef8f3}.today strong{color:#127255}thead .today{box-shadow:inset 0 3px #199770}.job{width:100%;text-align:left;border:0;border-left:3px solid #218b70;background:#edf7f3;border-radius:6px;padding:10px;color:#163d32;margin-bottom:6px;line-height:1.4;overflow-wrap:anywhere}.job:hover{background:#dcefe5}.job b{display:block;font-size:.9375rem;line-height:1.4}.job span,.job small{display:block;font-size:.875rem;margin-top:4px}.add{width:100%;border:1px dashed transparent;background:transparent;color:#657e8b;text-align:left;padding:8px;border-radius:5px;font-size:.875rem;min-height:37px}.add:hover{border-color:#a9c4bc;background:#f5faf7;color:#14664f}.legend{display:flex;justify-content:space-between;gap:15px;margin-top:18px;font-size:.875rem;color:#576f7d}.legend p{margin:0}.notice{border:1px solid #e0b16b;background:#fff7e9;padding:12px 16px;border-radius:8px;color:#71451a;margin:12px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}.notice[hidden]{display:none}dialog{border:1px solid #cfdde3;border-radius:16px;width:540px;max-width:calc(100% - 28px);padding:28px;color:#193548;max-height:90vh;overflow:auto;box-shadow:0 25px 80px #102d4933}dialog::backdrop{background:#0b293c88}dialog h2{margin:0 0 8px;font-size:1.5rem}dialog .intro{margin:0 0 24px;color:#607584;font-size:.9375rem}.fields{display:grid;grid-template-columns:1fr 1fr;gap:18px}.fields label{display:flex;flex-direction:column;gap:7px;font-size:.875rem;font-weight:600}.wide{grid-column:1/-1}.fields textarea{resize:vertical;min-height:80px}.optional{color:#677d8b;font-weight:400}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;flex-wrap:wrap}.danger{color:#ac2a36;margin-right:auto}.error{color:#a42530;font-size:.9375rem;margin:15px 0 0}.warning{color:#795017;background:#fff6e6;padding:10px;border-radius:6px;font-size:.875rem}.mobilehint{display:none}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);padding:13px 23px;background:#193c50;color:white;border-radius:9px;z-index:5;max-width:90vw}#deleteDialog{width:430px}#deleteDialog p{line-height:1.6}.local-label{font-size:.875rem;border:1px solid #557082;padding:7px 10px;border-radius:6px}
+@media(max-width:760px){header{padding:16px 5%}header small{display:none}main{padding:26px 5%}.topline{align-items:flex-start}h1{font-size:1.7rem}.topline .button{font-size:.875rem;padding:11px}.toolbar{align-items:flex-start}.nav{flex-wrap:wrap}.range{width:100%;margin-bottom:8px}.datejump{width:100%}.datejump input{flex:1}.mobilehint{display:block;font-size:.875rem;color:#627986}.board{border-radius:8px}thead th:first-child,tbody th{position:sticky;left:0;z-index:1;box-shadow:2px 0 4px #173f5010}thead th:first-child{z-index:2}.legend{flex-direction:column}.fields{gap:14px}.fields label{min-width:0}dialog{padding:23px}.local-label{font-size:.75rem}.avatar{display:none}}
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background: #f5f5f5;
+.accountbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.accountbar .button{font-size:.875rem;padding:8px 12px}.loginbox{max-width:460px;margin:50px auto;background:white;padding:30px;border:1px solid #d4dee5;border-radius:16px}.loginbox h1{font-size:1.7rem;margin-bottom:12px}.loginbox p{line-height:1.6;color:#526b79}.loginbox label{display:flex;flex-direction:column;gap:8px;margin-top:18px;font-weight:600;font-size:.9375rem}.loginbox button{margin-top:20px;width:100%}.accountrow{padding:14px 0;border-bottom:1px solid #e0e6ea;display:flex;justify-content:space-between;align-items:center;gap:10px}.accountrow small{display:block;color:#536b7a;margin-top:4px}.copylink{width:100%;font-size:.875rem}.readonly .add{display:none}.readonly .job{border-left-color:#467899;background:#eef4f8;color:#244559}.readonly #new{display:none}.apphelp{font-size:.875rem;color:#526b79;line-height:1.6}.installhelp{padding:14px;background:#e9f3ee;border-radius:9px;margin:0 0 20px;line-height:1.6}.app-actions{display:flex;gap:8px;flex-wrap:wrap}.mobilecards{display:none}.daycard{background:white;border:1px solid #d5e0e6;border-radius:10px;margin-bottom:16px;padding:17px}.daycard h2{font-size:1.05rem;margin:0 0 15px}.personcard{border-top:1px solid #e5ebef;padding-top:10px;margin-top:10px}.personcard>strong{display:block;font-size:.9375rem;margin-bottom:8px}.emptyday{font-size:.875rem;color:#637e8c;margin:3px 0 9px}
+@media(max-width:700px){header{flex-wrap:wrap;gap:12px}.accountbar{width:100%;justify-content:flex-end}.loginbox{margin:25px 16px;padding:24px}.board{display:block}.mobilehint{display:block}.mobilecards{display:none}.app-actions{justify-content:flex-end}.topline{flex-wrap:wrap}.daycard .add{border-color:#c5d8d0}.daycard .job{padding:13px}.installhelp{font-size:.9375rem}}
+</style></head><body>
+<header><div class="brand"><span class="mark" aria-hidden="true">▦</span> Kiryan B.V.</div><small>Werkrooster</small><div class="accountbar"><span class="local-label" id="identity">Op deze computer</span><button class="button" id="manage" hidden>Medewerkers</button><button class="button" id="logout" hidden>Uitloggen</button></div></header>
+<section id="loginView" class="loginbox" hidden><p class="eyebrow">Werkrooster</p><h1 id="loginTitle">Inloggen</h1><p id="loginIntro">Log in om de planning te bekijken.</p><form id="loginForm"><label id="nameLabel">Account<select id="loginName"><option>Beheerder</option><option>Mirek</option><option>Chris</option><option>Adam</option><option>Lee</option><option>Rene</option><option>Micheal</option></select></label><label>Wachtwoord<input id="loginPassword" type="password" autocomplete="current-password" required maxlength="256"></label><label id="confirmLabel" hidden>Herhaal wachtwoord<input id="confirmPassword" type="password" autocomplete="new-password" maxlength="256"></label><p class="error" id="loginError" role="alert"></p><button class="button primary" id="loginSubmit">Inloggen</button></form><p class="apphelp">Deze versie werkt nog op deze computer. Delen met telefoons kan zodra de app online staat.</p></section><main id="planner" hidden><div class="topline"><div><p class="eyebrow">Planning · 6 werknemers</p><h1>Wie werkt waar?</h1></div><div class="app-actions"><button class="button" id="install">App installeren</button><button class="button primary" id="new">＋ Werk toevoegen</button></div></div>
+<div class="installhelp" id="installHelp" hidden></div><div class="toolbar"><div class="nav"><span class="range" id="range"></span><button class="button arrow" id="prev" aria-label="Vorige week">‹</button><button class="button" id="today">Deze week</button><button class="button arrow" id="next" aria-label="Volgende week">›</button></div><label class="datejump">Ga naar datum <input type="date" id="jump"></label></div>
+<div id="status" role="status">Rooster laden…</div><div class="notice" id="loadError" hidden><span>Het rooster kon niet worden geladen.</span><button class="button" id="retry">Opnieuw proberen</button></div><p class="mobilehint">Veeg het rooster opzij voor de andere dagen.</p>
+<div class="board"><table aria-label="Werkrooster per werknemer en dag"><thead id="head"></thead><tbody id="body"></tbody></table></div>
+<div id="mobile" class="mobilecards"></div><div class="legend"><p id="instructions">Klik op <strong>＋ Inplannen</strong> om werk toe te voegen. Klik op een werk om het te wijzigen.</p><p id="total"></p></div></main>
+<dialog id="editor" aria-labelledby="editorTitle"><h2 id="editorTitle">Werk toevoegen</h2><p class="intro">Plan werkzaamheden voor een werknemer.</p><form id="form"><div class="fields">
+<label>Werknemer<select id="employee" required></select></label><label>Datum<input type="date" id="date" required></label>
+<label class="wide">Werkzaamheden<input id="title" maxlength="160" placeholder="Bijv. badkamer renoveren" required></label>
+<label class="wide">Locatie <span class="optional">Optioneel</span><input id="location" maxlength="200" placeholder="Adres of projectnaam"></label>
+<label>Begintijd <span class="optional">Optioneel</span><input type="time" id="start"></label><label>Eindtijd <span class="optional">Optioneel</span><input type="time" id="end"></label>
+<label class="wide">Notities <span class="optional">Optioneel</span><textarea id="notes" maxlength="2000" placeholder="Wat moet de werknemer weten?"></textarea></label></div>
+<p class="warning" id="overlap" hidden>Let op: deze werknemer is al ingepland op dit tijdstip.</p><p class="error" id="formError" role="alert"></p>
+<div class="actions"><button class="button danger" type="button" id="delete" hidden>Verwijderen</button><button class="button" type="button" id="cancel">Annuleren</button><button class="button primary" id="save" type="submit">Opslaan</button></div></form></dialog>
+<dialog id="deleteDialog" aria-labelledby="deleteTitle"><h2 id="deleteTitle">Werk verwijderen?</h2><p>Dit werk wordt uit het rooster verwijderd.</p><p class="error" id="deleteError" role="alert"></p><div class="actions"><button class="button" id="keep">Behouden</button><button class="button primary" id="confirmDelete">Verwijderen</button></div></dialog><div id="toast" class="toast" role="status" hidden></div>
+<dialog id="accountsDialog" aria-labelledby="accountsTitle"><h2 id="accountsTitle">Medewerkers</h2><p class="intro">Jij en Lee mogen wijzigen. De overige medewerkers mogen alleen kijken.</p><p class="apphelp">Uitnodigingen werken nu alleen op deze computer. Na online publicatie kun je ze persoonlijk delen. Een uitnodiging is 48 uur geldig en eenmalig te gebruiken.</p><div id="accountsList"></div><p id="accountError" class="error" role="alert"></p><div id="inviteResult" hidden><label for="inviteLink">Persoonlijke uitnodiging</label><input id="inviteLink" class="copylink" readonly><button id="copyInvite" class="button" type="button">Link kopiëren</button></div><div class="actions"><button class="button" id="closeAccounts">Sluiten</button></div></dialog><script>
+'use strict';
+const names=['Mirek','Chris','Adam','Lee','Rene','Micheal'];
+const $=id=>document.getElementById(id), fields=['employee','date','title','location','start','end','notes'];
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parse=s=>new Date(s+'T12:00:00');
+const monday=d=>{d=new Date(d);d.setDate(d.getDate()-(d.getDay()+6)%7);d.setHours(12,0,0,0);return d};
+const fmt=(d,opts)=>new Intl.DateTimeFormat('nl-NL',opts).format(d);
+const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let user=null;
+const canEdit=()=>user?.role==='owner'||user?.role==='editor';
+let week=monday(new Date()), jobs=[], editing=null, busy=false, loaded=false, toastTimer;
+names.forEach(name=>{const o=document.createElement('option');o.textContent=name;$('employee').append(o)});
+function days(){return Array.from({length:7},(_,i)=>{let d=new Date(week);d.setDate(d.getDate()+i);return d})}
+function render(){
+ const dates=days(), today=iso(new Date());
+ $('range').textContent=fmt(dates[0],{day:'numeric',month:'short'})+' – '+fmt(dates[6],{day:'numeric',month:'short',year:'numeric'});
+ $('jump').value=iso(week);
+ $('head').innerHTML='<tr><th scope="col">Werknemer</th>'+dates.map(d=>`<th scope="col" class="${iso(d)===today?'today':''}">${fmt(d,{weekday:'short'})}<strong>${fmt(d,{day:'numeric',month:'short'})}</strong></th>`).join('')+'</tr>';
+ const visible=jobs.filter(j=>j.date>=iso(dates[0])&&j.date<=iso(dates[6]));
+ $('body').innerHTML=names.map((name,n)=>`<tr><th scope="row"><span class="avatar" aria-hidden="true">${name[0]}</span>${name}<small>${visible.filter(j=>j.employee===name).length} ingepland</small></th>${dates.map(d=>{let date=iso(d);return `<td class="cell ${date===today?'today':''}">${visible.filter(j=>j.employee===name&&j.date===date).sort((a,b)=>a.start.localeCompare(b.start)).map(j=>`<button class="job" data-id="${escape(j.id)}" aria-label="Bekijk ${escape(j.title)} voor ${name}"><b>${escape(j.title)}</b>${j.start?`<span>${j.start} – ${j.end}</span>`:'<span>Zonder vaste tijd</span>'}${j.location?`<small>${escape(j.location)}</small>`:''}</button>`).join('')}<button class="add" data-name="${n}" data-date="${date}" ${!loaded?'disabled':''} aria-label="Werk inplannen voor ${name} op ${date}">＋ Inplannen</button></td>`}).join('')}</tr>`).join('');
+ renderMobile(dates,visible); $('planner').classList.toggle('readonly',!canEdit()); $('instructions').textContent=canEdit()?'Klik op ＋ Inplannen om werk toe te voegen. Klik op een werk om het te wijzigen.':'Klik op een werk om de locatie, tijden en notities te bekijken.'; $('new').hidden=!canEdit(); $('total').textContent=visible.length+' werkzaamheden deze week';$('new').disabled=!loaded;
 }
-
-h1 {
-    text-align: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    padding: 12px;
-    text-align: left;
-}
-
-th {
-    background: #333;
-    color: white;
-}
-
-td {
-    height: 45px;
-}
-
-[contenteditable="true"] {
-    cursor: text;
-}
-</style>
-</head>
-
-<body>
-
-<h1>Werkplanning</h1>
-
-<table>
-<tr>
-    <th>Monteur</th>
-    <th>Maandag</th>
-    <th>Dinsdag</th>
-    <th>Woensdag</th>
-    <th>Donderdag</th>
-    <th>Vrijdag</th>
-</tr>
-
-<tr>
-    <td contenteditable="true">Monteur 1</td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-</tr>
-
-<tr>
-    <td contenteditable="true">Monteur 2</td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-</tr>
-
-<tr>
-    <td contenteditable="true">Monteur 3</td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-    <td contenteditable="true"></td>
-</tr>
-
-</table>
-
-</body>
-</html>
+async function api(url,options={}){options.headers={...options.headers,'X-Rooster-Request':'1'};let response;try{response=await fetch(url,options)}catch{throw Error('Geen verbinding. Controleer of het rooster nog geopend is en probeer opnieuw.')}const data=await response.json();if(!response.ok){if(response.status===401&&user){user=null;jobs=[];loaded=false;render();document.querySelectorAll('dialog[open]').forEach(d=>d.close());showLogin(false);}throw Error(data.error||'Er ging iets mis. Probeer opnieuw.');}return data}
+async function load(quiet=false){if(!user)return; $('status').textContent='Rooster laden…';$('retry').disabled=true;try{jobs=await api('/api/jobs');loaded=true;$('loadError').hidden=true;$('status').textContent='Bijgewerkt · opgeslagen op deze computer';render()}catch(e){$('loadError').hidden=false;$('loadError').querySelector('span').textContent=e.message;$('status').textContent=loaded?'Laatst geladen rooster; verversen mislukt.':'Nog geen verbinding met het rooster.'}finally{$('retry').disabled=false}}
+function notify(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,3200)}
+function openEditor(job,employee=names[0],date=iso(new Date())){if(!user||(!job&&!canEdit()))return;editing=job?.id||null;$('form').reset();for(const field of fields)$(field).value=job?.[field]??(field==='employee'?employee:field==='date'?date:'');$('editorTitle').textContent=editing?'Werk wijzigen':'Werk toevoegen';$('delete').hidden=!editing;$('formError').textContent='';checkOverlap();fields.forEach(f=>$(f).disabled=!canEdit());$('save').hidden=!canEdit();$('delete').hidden=!canEdit()||!editing;$('cancel').textContent=canEdit()?'Annuleren':'Sluiten';if(!canEdit()){$('editorTitle').textContent='Werk bekijken';$('overlap').hidden=true;}$('editor').showModal()}
+function checkOverlap(){const value=Object.fromEntries(fields.map(f=>[f,$(f).value]));$('overlap').hidden=!jobs.some(j=>j.id!==editing&&j.employee===value.employee&&j.date===value.date&&(!j.start||!value.start||(j.start<value.end&&j.end>value.start)))}
+function setBusy(value){busy=value;['save','cancel','delete','confirmDelete','keep'].forEach(id=>$(id).disabled=value);fields.forEach(id=>$(id).disabled=value);$('save').textContent=value?'Opslaan…':'Opslaan'}
+$('form').addEventListener('input',checkOverlap);
+$('form').addEventListener('submit',async event=>{event.preventDefault();if(busy||!canEdit())return;const data=Object.fromEntries(fields.map(f=>[f,$(f).value]));$('formError').textContent='';if(Boolean(data.start)!==Boolean(data.end)||data.start&&data.end<=data.start){$('formError').textContent='Vul beide tijden in, met een eindtijd na de begintijd, of laat beide leeg.';return}setBusy(true);try{const saved=await api('/api/jobs'+(editing?'/'+editing:''),{method:editing?'PUT':'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});jobs=jobs.filter(j=>j.id!==saved.id).concat(saved);week=monday(parse(saved.date));render();$('status').textContent='Bijgewerkt · opgeslagen op deze computer';$('editor').close();notify('Werk opgeslagen')}catch(e){$('formError').textContent=e.message}finally{setBusy(false)}});
+$('delete').onclick=()=>{$('deleteError').textContent='';$('deleteDialog').showModal()};$('keep').onclick=()=>$('deleteDialog').close();
+$('confirmDelete').onclick=async()=>{if(busy||!canEdit())return;setBusy(true);try{await api('/api/jobs/'+editing,{method:'DELETE'});jobs=jobs.filter(j=>j.id!==editing);render();$('deleteDialog').close();$('editor').close();notify('Werk verwijderd')}catch(e){$('deleteError').textContent=e.message}finally{setBusy(false)}};
+['editor','deleteDialog'].forEach(id=>$(id).addEventListener('cancel',e=>{if(busy)e.preventDefault()}));
+$('cancel').onclick=()=>$('editor').close();$('new').onclick=()=>openEditor(null,names[0],iso(week));
+function boardClick(e){const edit=e.target.closest('[data-id]'),add=e.target.closest('[data-name]');if(edit)openEditor(jobs.find(j=>j.id===edit.dataset.id));else if(add&&loaded&&canEdit())openEditor(null,names[+add.dataset.name],add.dataset.date)};$('body').onclick=boardClick;$('mobile').onclick=boardClick;
+$('prev').onclick=()=>{week.setDate(week.getDate()-7);render()};$('next').onclick=()=>{week.setDate(week.getDate()+7);render()};$('today').onclick=()=>{week=monday(new Date());render()};$('jump').onchange=()=>{if($('jump').value){week=monday(parse($('jump').value));render()}};$('retry').onclick=load;
+if(document.modelContext?.registerTool){const lifecycle=new AbortController();try{Promise.resolve(document.modelContext.registerTool({name:'start_work_creation',title:'Werk inplannen',description:'Open het formulier om werk in te plannen; slaat nog niets op.',inputSchema:{type:'object',properties:{employee:{type:'string',enum:names},date:{type:'string',format:'date'}},required:['employee','date'],additionalProperties:false},annotations:{readOnlyHint:false},execute(input){if(!input||!names.includes(input.employee)||!/^\d{4}-\d{2}-\d{2}$/.test(input.date)||Number.isNaN(parse(input.date).getTime())||iso(parse(input.date))!==input.date)throw Error('Ongeldige werknemer of datum');if(!canEdit())throw Error('Je mag het rooster alleen bekijken.');if(!loaded||busy||$('editor').open)throw Error('Rond het huidige formulier af of wacht tot het rooster geladen is.');openEditor(null,input.employee,input.date);return {status:'form_opened',saved:false}}},{signal:lifecycle.signal})).catch(()=>{})}catch{}window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true})}
+</script><script src="/app.js"></script></body></html>
