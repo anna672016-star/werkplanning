@@ -30,7 +30,7 @@ def initialize():
           end TEXT NOT NULL, notes TEXT NOT NULL)''')
         db.execute('CREATE INDEX IF NOT EXISTS jobs_date ON jobs(date)')
         accounts.initialize(db)
-        accounts.reset_owner(db, "Beheerder", "NieuwWachtwoord123!")
+        
 
 def validate(data):
     if not isinstance(data, dict):
