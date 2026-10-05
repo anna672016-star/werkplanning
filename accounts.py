@@ -39,10 +39,10 @@ def initialize(db):
       name TEXT PRIMARY KEY, count INTEGER NOT NULL, until INTEGER NOT NULL
     );
     ''')
-row = db.execute("SELECT name FROM accounts WHERE name=?", ("Beheerder",)).fetchone()
-if not row: db.execute("INSERT INTO accounts (name, role, password) VALUES (?, ?, ?)",
-                   ("Beheerder", "owner", password_hash("NieuwWachtwoord123!")))
-db.execute("UPDATE accounts SET password=? WHERE name=?", (password_hash("NieuwWachtwoord123!"), "Beheerder"))
+    row = db.execute("SELECT name FROM accounts WHERE name=?", ("Beheerder",)).fetchone()
+    if not row: db.execute("INSERT INTO accounts (name, role, password) VALUES (?, ?, ?)",
+                       ("Beheerder", "owner", password_hash("NieuwWachtwoord123!")))
+    db.execute("UPDATE accounts SET password=? WHERE name=?", (password_hash("NieuwWachtwoord123!"), "Beheerder"))
 
 def current(db, headers):
     cookies = SimpleCookie()
