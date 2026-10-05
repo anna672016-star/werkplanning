@@ -90,7 +90,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.headers.get('Host') not in hosts:
             self.send(403, {'error':'Geen toegang.'}); return False
         origin = self.headers.get('Origin')
-        if origin and origin not in {f'http://{h}' for h in hosts}:
+        if origin and origin not in {f'https://{h}' for h in hosts}:
             self.send(403, {'error':'Geen toegang.'}); return False
         return True
 
