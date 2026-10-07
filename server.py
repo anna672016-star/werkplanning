@@ -182,7 +182,7 @@ class Handler(BaseHTTPRequestHandler):
             self.send(200,result,cookie=token)
         except (ValueError,UnicodeDecodeError) as error:
             self.send(400,{'error':str(error) or 'Ongeldige invoer.'})
-        except sqlite3.Error:
+        except psycopg.Error:
             self.send(503,{'error':'Dit is niet gelukt. Probeer het opnieuw.'})
 
     def do_GET(self):
