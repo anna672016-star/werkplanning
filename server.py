@@ -216,7 +216,7 @@ class Handler(BaseHTTPRequestHandler):
                 with connect() as db:
                     rows = [dict(r) for r in db.execute('SELECT * FROM jobs ORDER BY date,start,title')]
                 self.send(200, rows)
-            except sqlite3.Error:
+            except Exception as e:
                 self.send(503, {'error':'Het rooster kan niet worden geladen. Probeer het opnieuw.'})
         else:
             self.send(404, {'error':'Niet gevonden.'})
@@ -258,19 +258,21 @@ class Handler(BaseHTTPRequestHandler):
                     raise ValueError('De invoer is te groot of leeg.')
                 data = validate(json.loads(self.request_body))
             with connect() as db:
+                with db.cursor()as cur:
                 if self.command == 'DELETE':
-                    cursor = db.execute('DELETE FROM jobs WHERE id=?', (key,))
+                    cursor = cur.execute('DELETE FROM jobs WHERE id=%s', (key,))
                 elif self.command == 'PUT':
-                    cursor = db.execute('UPDATE jobs SET employee=?,date=?,title=?,location=?,start=?,end=?,notes=? WHERE id=?', (*data.values(),key))
+                    cursor = cur.execute('UPDATE jobs SET employee=%s,date=%s,title=%s,location=%s,start=%s,end=%s,notes=%s WHERE id=%s', (*data.values(),key))
                 else:
                     key = str(uuid.uuid4())
-                    cursor = db.execute('INSERT INTO jobs VALUES (?,?,?,?,?,?,?,?)', (key,*data.values()))
+                    cursor = cur.execute('INSERT INTO jobs VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', (key,*data.values()))
+                    db.commit()
                 if self.command != 'POST' and not cursor.rowcount:
                     self.send(404, {'error':'Dit werk bestaat niet meer. Ververs het rooster.'}); return
             self.send(200, {'id':key} if self.command == 'DELETE' else {'id':key, **data})
         except (ValueError, UnicodeDecodeError) as error:
             self.send(400, {'error': str(error) or 'Ongeldige invoer.'})
-        except sqlite3.Error:
+        except psycopg.Error:
             self.send(503, {'error':'Opslaan is niet gelukt. Je invoer blijft staan; probeer opnieuw.'})
 
     do_POST = mutate
