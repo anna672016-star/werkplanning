@@ -126,7 +126,7 @@ class Handler(BaseHTTPRequestHandler):
                     
                     
                         
-                        db.execute('INSERT INTO accounts VALUES (?,?,?)',('Beheerder','owner',hashed))
+                        db.execute('INSERT INTO accounts VALUES (%s,%s,%s)',('Beheerder','owner',hashed))
                         token = accounts.session(db,'Beheerder')
                         result = {'name':'Beheerder','role':'owner'}
                         self.send(200,result,{'Set-Cookie':accounts.cookie_header(token)})
@@ -136,12 +136,12 @@ class Handler(BaseHTTPRequestHandler):
                     if not accounts.attempt(db,name.casefold()):
                         self.send(429,{'error':'Te veel pogingen. Probeer het over 15 minuten opnieuw.'}); return
                     with db.cursor() as cur:
-                    cur.execute('SELECT * FROM accounts WHERE name=%s', (name,))
-                    row = cur.fetchone()
+                        cur.execute('SELECT * FROM accounts WHERE name=%s', (name,))
+                        row = cur.fetchone()
                     if not row or not accounts.verify(data.get('password'),row['password']):
                         db.commit()
                         self.send(401,{'error':'Accountnaam of wachtwoord klopt niet.'}); return
-                    db.execute('DELETE FROM login_attempts WHERE name=%s',(name.casefold(),))
+                        db.execute('DELETE FROM login_attempts WHERE name=%s',(name.casefold(),))
                     token = accounts.session(db,row['name'])
                     result = {'name':row['name'],'role':row['role']}
                 elif path == '/api/logout':
@@ -151,15 +151,15 @@ class Handler(BaseHTTPRequestHandler):
                         self.send(403,{'error':'Alleen de beheerder kan toegang regelen.'}); return
                     if name not in EMPLOYEES:
                         raise ValueError('Kies een werknemer.')
-                    if db.execute('SELECT 1 FROM accounts WHERE name=?',(name,)).fetchone():
-                        self.send(409,{'error':'Deze medewerker heeft al een account.'}); return
-                    invitation = secrets.token_urlsafe(32)
-                    role = 'editor' if name=='Lee' else 'viewer'
-                    db.execute('INSERT INTO invitations VALUES (?,?,?,?) ON CONFLICT(name) DO UPDATE SET token=excluded.token,expires=excluded.expires,role=excluded.role',(accounts.digest(invitation),name,role,int(time.time())+48*3600))
-                    result={'token':invitation,'name':name,'role':role}
+                if db.execute('SELECT 1 FROM accounts WHERE name=?',(name,)).fetchone():
+                    self.send(409,{'error':'Deze medewerker heeft al een account.'}); return
+                invitation = secrets.token_urlsafe(32)
+                role = 'editor' if name=='Lee' else 'viewer'
+                db.execute('INSERT INTO invitations VALUES (?,?,?,?) ON CONFLICT(name) DO UPDATE SET token=excluded.token,expires=excluded.expires,role=excluded.role',(accounts.digest(invitation),name,role,int(time.time())+48*3600))
+                result={'token':invitation,'name':name,'role':role}
                 elif path == '/api/join':
                     invitation=data.get('token','')
-                    if not isinstance(invitation,str) or len(invitation)>200:
+                if not isinstance(invitation,str) or len(invitation)>200:
                         raise ValueError('Ongeldige uitnodiging.')
                     hashed=accounts.password_hash(data.get('password'))
                     db.execute('BEGIN IMMEDIATE')
@@ -261,15 +261,15 @@ class Handler(BaseHTTPRequestHandler):
                 data = validate(json.loads(self.request_body))
             with connect() as db:
                 with db.cursor()as cur:
-                if self.command == 'DELETE':
-                    cursor = cur.execute('DELETE FROM jobs WHERE id=%s', (key,))
-                elif self.command == 'PUT':
+                    if self.command == 'DELETE':
+                       cursor = cur.execute('DELETE FROM jobs WHERE id=%s', (key,))
+                    elif self.command == 'PUT':
                     cursor = cur.execute('UPDATE jobs SET employee=%s,date=%s,title=%s,location=%s,start=%s,end=%s,notes=%s WHERE id=%s', (*data.values(),key))
-                else:
+                    else:
                     key = str(uuid.uuid4())
                     cursor = cur.execute('INSERT INTO jobs VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', (key,*data.values()))
-                    db.commit()
-                if self.command != 'POST' and not cursor.rowcount:
+                        db.commit()
+                    if self.command != 'POST' and not cursor.rowcount:
                     self.send(404, {'error':'Dit werk bestaat niet meer. Ververs het rooster.'}); return
             self.send(200, {'id':key} if self.command == 'DELETE' else {'id':key, **data})
         except (ValueError, UnicodeDecodeError) as error:
