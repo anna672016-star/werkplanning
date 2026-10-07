@@ -126,11 +126,11 @@ class Handler(BaseHTTPRequestHandler):
                     
                     
                         
-                    db.execute('INSERT INTO accounts VALUES (?,?,?)',('Beheerder','owner',hashed))
-                    token = accounts.session(db,'Beheerder')
-                    result = {'name':'Beheerder','role':'owner'}
-                self.send(200,result,{'Set-Cookie':accounts.cookie_header(token)})
-                return
+                        db.execute('INSERT INTO accounts VALUES (?,?,?)',('Beheerder','owner',hashed))
+                        token = accounts.session(db,'Beheerder')
+                        result = {'name':'Beheerder','role':'owner'}
+                        self.send(200,result,{'Set-Cookie':accounts.cookie_header(token)})
+                        return
                 elif path == '/api/login':
                   
                     if not accounts.attempt(db,name.casefold()):
