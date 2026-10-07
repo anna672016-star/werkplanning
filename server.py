@@ -109,7 +109,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             data = self.json_body()
             token = None
-           with connect() as db:
+            with connect() as db:
                 user = accounts.current(db, self.headers)
                 name = data.get('name', '')
                 if not isinstance(name, str) or len(name) > 60:
