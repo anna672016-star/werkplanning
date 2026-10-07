@@ -22,7 +22,7 @@ def verify(password, stored):
         return False
 
 def initialize(db):
-    db.executescript('''
+    db.execute('''
     CREATE TABLE IF NOT EXISTS accounts (
       name TEXT PRIMARY KEY COLLATE NOCASE,
       role TEXT NOT NULL CHECK(role IN ('owner','editor','viewer')),
