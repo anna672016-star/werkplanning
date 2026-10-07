@@ -290,11 +290,11 @@ class Handler(BaseHTTPRequestHandler):
                     if self.command == 'DELETE':
                        cursor = cur.execute('DELETE FROM jobs WHERE id=%s', (key,))
                     elif self.command == 'PUT':
-                    cursor = cur.execute('UPDATE jobs SET employee=%s,date=%s,title=%s,location=%s,start=%s,end=%s,notes=%s WHERE id=%s', (*data.values(),key))
+                        cursor = cur.execute('UPDATE jobs SET employee=%s,date=%s,title=%s,location=%s,start=%s,end=%s,notes=%s WHERE id=%s', (*data.values(),key))
                     else:
-                    key = str(uuid.uuid4())
-                    cursor = cur.execute('INSERT INTO jobs VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', (key,*data.values()))
-                        db.commit()
+                        key = str(uuid.uuid4())
+                        cursor = cur.execute('INSERT INTO jobs VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', (key,*data.values()))
+                    db.commit()
                     if self.command != 'POST' and not cursor.rowcount:
                     self.send(404, {'error':'Dit werk bestaat niet meer. Ververs het rooster.'}); return
             self.send(200, {'id':key} if self.command == 'DELETE' else {'id':key, **data})
