@@ -117,24 +117,29 @@ class Handler(BaseHTTPRequestHandler):
                 name = name.strip()
                 if path == '/api/setup':
                     # Local-only bootstrap. A deployed version must provision the owner separately.
-                    if db.execute('SELECT 1 FROM accounts LIMIT 1').fetchone():
+                   with db.cursor() as cur:
+                    cur.execute('SELECT 1 FROM accounts LIMIT 1')
+                    account_exists = cur.fetchone()
+                if account_exists:
                         self.send(409,{'error':'Het beheerdersaccount bestaat al.'}); return
                     hashed = accounts.password_hash(data.get('password'))
-                    db.execute('BEGIN IMMEDIATE')
-                    if db.execute('SELECT 1 FROM accounts LIMIT 1').fetchone():
+                    
+                    
                         self.send(409,{'error':'Het beheerdersaccount bestaat al.'}); return
                     db.execute('INSERT INTO accounts VALUES (?,?,?)',('Beheerder','owner',hashed))
                     token = accounts.session(db,'Beheerder')
                     result = {'name':'Beheerder','role':'owner'}
                 elif path == '/api/login':
-                    db.execute('BEGIN IMMEDIATE')
+                  
                     if not accounts.attempt(db,name.casefold()):
                         self.send(429,{'error':'Te veel pogingen. Probeer het over 15 minuten opnieuw.'}); return
-                    row = db.execute('SELECT * FROM accounts WHERE name=?',(name,)).fetchone()
+                    with db.cursor() as cur:
+                    cur.execute('SELECT * FROM accounts WHERE name=%s', (name,))
+                    row = cur.fetchone()
                     if not row or not accounts.verify(data.get('password'),row['password']):
                         db.commit()
                         self.send(401,{'error':'Accountnaam of wachtwoord klopt niet.'}); return
-                    db.execute('DELETE FROM login_attempts WHERE name=?',(name.casefold(),))
+                    db.execute('DELETE FROM login_attempts WHERE name=%s',(name.casefold(),))
                     token = accounts.session(db,row['name'])
                     result = {'name':row['name'],'role':row['role']}
                 elif path == '/api/logout':
