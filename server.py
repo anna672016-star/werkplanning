@@ -296,7 +296,7 @@ class Handler(BaseHTTPRequestHandler):
                         cursor = cur.execute('INSERT INTO jobs VALUES (%s,%s,%s,%s,%s,%s,%s,%s)', (key,*data.values()))
                     db.commit()
                     if self.command != 'POST' and not cursor.rowcount:
-                    self.send(404, {'error':'Dit werk bestaat niet meer. Ververs het rooster.'}); return
+                       self.send(404, {'error':'Dit werk bestaat niet meer. Ververs het rooster.'}); return
             self.send(200, {'id':key} if self.command == 'DELETE' else {'id':key, **data})
         except (ValueError, UnicodeDecodeError) as error:
             self.send(400, {'error': str(error) or 'Ongeldige invoer.'})
