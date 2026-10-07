@@ -109,79 +109,105 @@ class Handler(BaseHTTPRequestHandler):
         try:
             data = self.json_body()
             token = None
-            with connect() as db:
-                user = accounts.current(db,self.headers)
-                name = data.get('name','')
-                if not isinstance(name,str) or len(name)>60:
+           with connect() as db:
+                user = accounts.current(db, self.headers)
+                name = data.get('name', '')
+                if not isinstance(name, str) or len(name) > 60:
                     raise ValueError('Ongeldige accountnaam.')
                 name = name.strip()
+
                 if path == '/api/setup':
-                    # Local-only bootstrap. A deployed version must provision the owner separately.
-                   with db.cursor() as cur:
-                    cur.execute('SELECT 1 FROM accounts LIMIT 1')
-                    account_exists = cur.fetchone()
-                if account_exists:
-                        self.send(409,{'error':'Het beheerdersaccount bestaat al.'}); return
-                        hashed = accounts.password_hash(data.get('password'))
-                    
-                    
-                        
-                        db.execute('INSERT INTO accounts VALUES (%s,%s,%s)',('Beheerder','owner',hashed))
-                        token = accounts.session(db,'Beheerder')
-                        result = {'name':'Beheerder','role':'owner'}
-                        self.send(200,result,{'Set-Cookie':accounts.cookie_header(token)})
-                        return
+                    with db.cursor() as cur:
+                        cur.execute('SELECT 1 FROM accounts LIMIT 1')
+                        account_exists = cur.fetchone()
+                    if account_exists:
+                        self.send(409, {'error':'Het beheerdersaccount bestaat al.'}); return
+                    hashed = accounts.password_hash(data.get('password'))
+                    db.execute(
+                        'INSERT INTO accounts VALUES (%s,%s,%s)',
+                        ('Beheerder', 'owner', hashed)
+                    )
+                    db.commit()
+                    token = accounts.session(db, 'Beheerder')
+                    result = {'name':'Beheerder', 'role':'owner'}
+                    self.send(200, result, {'Set-Cookie':accounts.cookie_header(token)})
+                    return
+
                 elif path == '/api/login':
-                  
-                    if not accounts.attempt(db,name.casefold()):
-                        self.send(429,{'error':'Te veel pogingen. Probeer het over 15 minuten opnieuw.'}); return
+                    if not accounts.attempt(db, name.casefold()):
+                        self.send(429, {'error':'Te veel pogingen. Probeer het over 15 minuten opnieuw.'}); return
                     with db.cursor() as cur:
                         cur.execute('SELECT * FROM accounts WHERE name=%s', (name,))
                         row = cur.fetchone()
-                    if not row or not accounts.verify(data.get('password'),row['password']):
+                    if not row or not accounts.verify(data.get('password'), row['password']):
                         db.commit()
-                        self.send(401,{'error':'Accountnaam of wachtwoord klopt niet.'}); return
-                        db.execute('DELETE FROM login_attempts WHERE name=%s',(name.casefold(),))
-                    token = accounts.session(db,row['name'])
-                    result = {'name':row['name'],'role':row['role']}
+                        self.send(401, {'error':'Accountnaam of wachtwoord klopt niet.'}); return
+                    db.execute('DELETE FROM login_attempts WHERE name=%s', (name.casefold(),))
+                    db.commit()
+                    token = accounts.session(db, row['name'])
+                    result = {'name':row['name'], 'role':row['role']}
+
                 elif path == '/api/logout':
-                    accounts.logout(db,self.headers); token=''; result={'ok':True}
+                    accounts.logout(db, self.headers)
+                    token = ''
+                    result = {'ok':True}
+
                 elif path == '/api/invite':
-                    if not user or user['role']!='owner':
-                        self.send(403,{'error':'Alleen de beheerder kan toegang regelen.'}); return
+                    if not user or user['role'] != 'owner':
+                        self.send(403, {'error':'Alleen de beheerder kan toegang regelen.'}); return
                     if name not in EMPLOYEES:
                         raise ValueError('Kies een werknemer.')
-                if db.execute('SELECT 1 FROM accounts WHERE name=?',(name,)).fetchone():
-                    self.send(409,{'error':'Deze medewerker heeft al een account.'}); return
-                invitation = secrets.token_urlsafe(32)
-                role = 'editor' if name=='Lee' else 'viewer'
-                db.execute('INSERT INTO invitations VALUES (?,?,?,?) ON CONFLICT(name) DO UPDATE SET token=excluded.token,expires=excluded.expires,role=excluded.role',(accounts.digest(invitation),name,role,int(time.time())+48*3600))
-                result={'token':invitation,'name':name,'role':role}
+                    with db.cursor() as cur:
+                        cur.execute('SELECT 1 FROM accounts WHERE name=%s', (name,))
+                        exists = cur.fetchone()
+                    if exists:
+                        self.send(409, {'error':'Deze medewerker heeft al een account.'}); return
+                    invitation = secrets.token_urlsafe(32)
+                    role = 'editor' if name == 'Lee' else 'viewer'
+                    db.execute(
+                        'INSERT INTO invitations VALUES (%s,%s,%s,%s) ON CONFLICT(name) DO UPDATE SET token=EXCLUDED.token, role=EXCLUDED.role, expires=EXCLUDED.expires',
+                        (invitation, name, role, int(time.time()) + 86400)
+                    )
+                    db.commit()
+                    result = {'token':invitation, 'name':name, 'role':role}
+
                 elif path == '/api/join':
-                    invitation=data.get('token','')
-                if not isinstance(invitation,str) or len(invitation)>200:
+                    invitation = data.get('token', '')
+                    if not isinstance(invitation, str) or len(invitation) > 200:
                         raise ValueError('Ongeldige uitnodiging.')
-                    hashed=accounts.password_hash(data.get('password'))
-                    db.execute('BEGIN IMMEDIATE')
-                    row=db.execute('SELECT * FROM invitations WHERE token=? AND expires>?',(accounts.digest(invitation),int(time.time()))).fetchone()
+                    hashed = accounts.password_hash(data.get('password'))
+                    with db.cursor() as cur:
+                        cur.execute(
+                            'SELECT * FROM invitations WHERE token=%s AND expires>%s',
+                            (invitation, int(time.time()))
+                        )
+                        row = cur.fetchone()
                     if not row:
-                        raise ValueError('De uitnodiging is verlopen of al gebruikt. Vraag een nieuwe aan de beheerder.')
-                    db.execute('INSERT INTO accounts VALUES (?,?,?)',(row['name'],row['role'],hashed))
-                    db.execute('DELETE FROM invitations WHERE token=?',(row['token'],))
-                    token=accounts.session(db,row['name'])
-                    result={'name':row['name'],'role':row['role']}
+                        raise ValueError('De uitnodiging is verlopen of al gebruikt.')
+                    db.execute(
+                        'INSERT INTO accounts VALUES (%s,%s,%s)',
+                        (row['name'], row['role'], hashed)
+                    )
+                    db.execute('DELETE FROM invitations WHERE token=%s', (row['token'],))
+                    db.commit()
+                    token = accounts.session(db, row['name'])
+                    result = {'name':row['name'], 'role':row['role']}
+
                 elif path == '/api/revoke':
-                    if not user or user['role']!='owner':
-                        self.send(403,{'error':'Alleen de beheerder kan toegang regelen.'}); return
+                    if not user or user['role'] != 'owner':
+                        self.send(403, {'error':'Alleen de beheerder kan toegang regelen.'}); return
                     if name not in EMPLOYEES:
                         raise ValueError('Kies een werknemer.')
-                    db.execute('DELETE FROM sessions WHERE name=?',(name,))
-                    db.execute('DELETE FROM accounts WHERE name=?',(name,))
-                    db.execute('DELETE FROM invitations WHERE name=?',(name,))
-                    result={'ok':True}
+                    db.execute('DELETE FROM sessions WHERE name=%s', (name,))
+                    db.execute('DELETE FROM accounts WHERE name=%s', (name,))
+                    db.execute('DELETE FROM invitations WHERE name=%s', (name,))
+                    db.commit()
+                    result = {'ok':True}
+
                 else:
-                    self.send(404,{'error':'Niet gevonden.'}); return
-            self.send(200,result,cookie=token)
+                    self.send(404, {'error':'Niet gevonden.'}); return
+
+                self.send(200, result, cookie=token)
         except (ValueError,UnicodeDecodeError) as error:
             self.send(400,{'error':str(error) or 'Ongeldige invoer.'})
         except psycopg.Error:
