@@ -122,13 +122,15 @@ class Handler(BaseHTTPRequestHandler):
                     account_exists = cur.fetchone()
                 if account_exists:
                         self.send(409,{'error':'Het beheerdersaccount bestaat al.'}); return
-                    hashed = accounts.password_hash(data.get('password'))
+                        hashed = accounts.password_hash(data.get('password'))
                     
                     
-                        self.send(409,{'error':'Het beheerdersaccount bestaat al.'}); return
+                        
                     db.execute('INSERT INTO accounts VALUES (?,?,?)',('Beheerder','owner',hashed))
                     token = accounts.session(db,'Beheerder')
                     result = {'name':'Beheerder','role':'owner'}
+                self.send(200,result,{'Set-Cookie':accounts.cookie_header(token)})
+                return
                 elif path == '/api/login':
                   
                     if not accounts.attempt(db,name.casefold()):
