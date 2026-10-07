@@ -2,34 +2,30 @@
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 import sqlite3, json, uuid, datetime, os
+import psycopg
 import accounts, secrets, time, socket
 from urllib.parse import urlsplit, parse_qs
 
 ROOT = Path(__file__).resolve().parent
-DB = Path(os.environ.get('ROOSTER_DB', str(ROOT / 'rooster.sqlite3')))
+DATABASE_URL = os.environ.get('DATABASE_URL')
 PORT = int(os.environ.get('PORT', '8765'))
 EMPLOYEES = ['Mirek', 'Chris', 'Adam', 'Lee', 'Rene', 'Micheal']
 
-class ClosingConnection(sqlite3.Connection):
-    def __exit__(self, *args):
-        try:
-            return super().__exit__(*args)
-        finally:
-            self.close()
+
 
 def connect():
-    db = sqlite3.connect(DB, timeout=10, factory=ClosingConnection)
-    db.row_factory = sqlite3.Row
-    return db
+    return psycopg.connect(DATABASE_URL)
 
 def initialize():
     with connect() as db:
-        db.execute('''CREATE TABLE IF NOT EXISTS jobs (
-          id TEXT PRIMARY KEY, employee TEXT NOT NULL, date TEXT NOT NULL,
-          title TEXT NOT NULL, location TEXT NOT NULL, start TEXT NOT NULL,
-          end TEXT NOT NULL, notes TEXT NOT NULL)''')
-        db.execute('CREATE INDEX IF NOT EXISTS jobs_date ON jobs(date)')
-        accounts.initialize(db)
+         with db.cursor() as cur:
+            cur.execute('''CREATE TABLE IF NOT EXISTS jobs (
+                id TEXT PRIMARY KEY, employee TEXT NOT NULL, date TEXT NOT NULL,
+                title TEXT NOT NULL, location TEXT NOT NULL, start TEXT NOT NULL,
+                "end" TEXT NOT NULL, notes TEXT NOT NULL)''')
+            cur.execute('CREATE INDEX IF NOT EXISTS jobs_date ON jobs(date)')
+            accounts.initialize(db)
+        
         
 
 def validate(data):
