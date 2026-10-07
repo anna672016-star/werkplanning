@@ -24,7 +24,7 @@ def verify(password, stored):
 def initialize(db):
     db.execute('''
     CREATE TABLE IF NOT EXISTS accounts (
-      name TEXT PRIMARY KEY COLLATE NOCASE,
+      name TEXT PRIMARY KEY,
       role TEXT NOT NULL CHECK(role IN ('owner','editor','viewer')),
       password TEXT NOT NULL
     );
@@ -32,7 +32,7 @@ def initialize(db):
       token TEXT PRIMARY KEY, name TEXT NOT NULL, expires INTEGER NOT NULL
     );
     CREATE TABLE IF NOT EXISTS invitations (
-      token TEXT PRIMARY KEY, name TEXT UNIQUE COLLATE NOCASE,
+      token TEXT PRIMARY KEY, name TEXT UNIQUE,
       role TEXT NOT NULL, expires INTEGER NOT NULL
     );
     CREATE TABLE IF NOT EXISTS login_attempts (
