@@ -39,10 +39,10 @@ def initialize(db):
       name TEXT PRIMARY KEY, count INTEGER NOT NULL, until INTEGER NOT NULL
     );
     ''')
-    row = db.execute("SELECT name FROM accounts WHERE name=?", ("Beheerder",)).fetchone()
-    if not row: db.execute("INSERT INTO accounts (name, role, password) VALUES (?, ?, ?)",
+    row = db.execute("SELECT name FROM accounts WHERE name=%s", ("Beheerder",)).fetchone()
+    if not row: db.execute("INSERT INTO accounts (name, role, password) VALUES (%s, %s, %s)",
                        ("Beheerder", "owner", password_hash("NieuwWachtwoord123!")))
-    db.execute("UPDATE accounts SET password=? WHERE name=?", (password_hash("NieuwWachtwoord123!"), "Beheerder"))
+    db.execute("UPDATE accounts SET password=%s WHERE name=%s", (password_hash("NieuwWachtwoord123!"), "Beheerder"))
 
 def current(db, headers):
     cookies = SimpleCookie()
@@ -51,28 +51,28 @@ def current(db, headers):
         token = cookies['rooster_session'].value
     except Exception:
         return None
-    row = db.execute('SELECT a.name,a.role FROM sessions s JOIN accounts a ON a.name=s.name WHERE s.token=? AND s.expires>?', (digest(token),int(time.time()))).fetchone()
+    row = db.execute('SELECT a.name,a.role FROM sessions s JOIN accounts a ON a.name=s.name WHERE s.token=%s AND s.expires>%s', (digest(token),int(time.time()))).fetchone()
     return dict(row) if row else None
 
 def session(db, name):
     token = secrets.token_urlsafe(32)
-    db.execute('DELETE FROM sessions WHERE expires<=?', (int(time.time()),))
-    db.execute('INSERT INTO sessions VALUES (?,?,?)', (digest(token),name,int(time.time())+7*86400))
+    db.execute('DELETE FROM sessions WHERE expires<=%s', (int(time.time()),))
+    db.execute('INSERT INTO sessions VALUES (%s,%s,%s)', (digest(token),name,int(time.time())+7*86400))
     return token
 
 def logout(db, headers):
     cookies = SimpleCookie()
     try:
         cookies.load(headers.get('Cookie',''))
-        db.execute('DELETE FROM sessions WHERE token=?',(digest(cookies['rooster_session'].value),))
+        db.execute('DELETE FROM sessions WHERE token=%s',(digest(cookies['rooster_session'].value),))
     except Exception:
         pass
 
 def attempt(db, name):
     now = int(time.time())
-    db.execute('DELETE FROM login_attempts WHERE until<=?', (now,))
-    row = db.execute('SELECT count FROM login_attempts WHERE name=?',(name,)).fetchone()
+    db.execute('DELETE FROM login_attempts WHERE until<=%s', (now,))
+    row = db.execute('SELECT count FROM login_attempts WHERE name=%s',(name,)).fetchone()
     if row and row['count'] >= 8:
         return False
-    db.execute('INSERT INTO login_attempts VALUES (?,1,?) ON CONFLICT(name) DO UPDATE SET count=count+1',(name,now+900))
+    db.execute('INSERT INTO login_attempts VALUES (%s,1,%s) ON CONFLICT(name) DO UPDATE SET count=count+1',(name,now+900))
     return True
