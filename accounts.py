@@ -42,8 +42,9 @@ def initialize(db):
     row = db.execute("SELECT name FROM accounts WHERE name=%s", ("Beheerder",)).fetchone()
     if not row: db.execute("INSERT INTO accounts (name, role, password) VALUES (%s, %s, %s)",
                        ("Beheerder", "owner", password_hash("NieuwWachtwoord123!")))
-    
-
+        db.execute("UPDATE accounts SET password=%s WHERE name=%s", (password_hash("NieuwWachtwoord123!"), "Beheerder))
+        db.commit()
+                                                                     
 def current(db, headers):
     cookies = SimpleCookie()
     try:
